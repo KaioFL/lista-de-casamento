@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 
 const items = [
   { href: "", label: "Visão geral", icon: LayoutGrid, exact: true },
-  { href: "/presentes", label: "Presentes", icon: Gift },
+  { href: "/presentes", label: "O que levar", icon: Gift },
   { href: "/convidados", label: "Convidados", icon: Users },
   { href: "/recados", label: "Recados", icon: MessageCircleHeart },
   { href: "/configuracoes", label: "Configurações", icon: Settings },

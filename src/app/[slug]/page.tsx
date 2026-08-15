@@ -182,12 +182,13 @@ export default async function PublicWeddingPage({ params }: PageProps) {
             <div className="container-page">
               <Reveal>
                 <SectionHeading
-                  eyebrow="Com carinho"
-                  title="Lista de presentes"
+                  eyebrow="Lista colaborativa"
+                  title="O que levar para a celebração"
                 />
                 <p className="text-muted-foreground mx-auto mt-5 max-w-md text-center text-sm leading-relaxed">
-                  Se desejarem nos presentear, reunimos aqui algumas ideias. Mas
-                  saibam: a presença de vocês já é tudo o que pedimos.
+                  Para celebrarmos juntos esse grande dia, separamos abaixo os
+                  itens que você pode levar para a nossa festa. Escolha o que
+                  preferir e confirme sua escolha!
                 </p>
                 {wedding.pix_key && (
                   <div className="mt-6 flex justify-center">

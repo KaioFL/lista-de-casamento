@@ -28,6 +28,9 @@ export function PublicHero({ wedding }: { wedding: Wedding }) {
           <img
             src={wedding.cover_image_url}
             alt=""
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
             className="size-full origin-center animate-[ken-burns_20s_ease-out_both] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/75" />

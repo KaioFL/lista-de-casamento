@@ -83,7 +83,7 @@ export function GiftFormDialog({
         : await createGiftAction(weddingId, values);
 
       if (result.success) {
-        toast.success(isEdit ? "Presente atualizado!" : "Presente adicionado!");
+        toast.success(isEdit ? "Item atualizado!" : "Item adicionado!");
         setOpen(false);
         if (!isEdit) form.reset();
         router.refresh();
@@ -99,18 +99,18 @@ export function GiftFormDialog({
         {trigger ?? (
           <Button>
             <Plus className="size-4" />
-            Adicionar presente
+            Adicionar item
           </Button>
         )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="font-heading text-2xl">
-            {isEdit ? "Editar presente" : "Novo presente"}
+            {isEdit ? "Editar item" : "Novo item para levar"}
           </DialogTitle>
           <DialogDescription>
-            Uma sugestão do que vocês gostariam de ganhar. Só para mostrar aos
-            convidados.
+            Cadastre um item, bebida ou comida para os convidados escolherem levar
+            para a celebração.
           </DialogDescription>
         </DialogHeader>
 
@@ -123,9 +123,12 @@ export function GiftFormDialog({
                   name="title"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nome do presente</FormLabel>
+                      <FormLabel>Nome do item</FormLabel>
                       <FormControl>
-                        <Input placeholder="Jogo de panelas" {...field} />
+                        <Input
+                          placeholder="Ex: Fardo de Cerveja Heineken, Torta de Frango..."
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

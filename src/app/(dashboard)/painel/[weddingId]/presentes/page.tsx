@@ -20,16 +20,33 @@ export default async function PresentesPage({
     getGiftCategories(weddingId),
   ]);
 
+  const totalItems = gifts.length;
+  const reservedItems = gifts.filter(
+    (g) =>
+      g.status === "reserved" ||
+      (g.reservations &&
+        g.reservations.some((r) => r.status !== "cancelled")),
+  ).length;
+  const availableItems = totalItems - reservedItems;
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="font-heading text-xl font-semibold">
-            Lista de presentes
-          </h2>
+          <div className="flex items-center gap-3">
+            <h2 className="font-heading text-xl font-semibold">
+              O que levar · Lista colaborativa
+            </h2>
+            {totalItems > 0 && (
+              <span className="text-muted-foreground text-xs font-normal">
+                ({reservedItems} escolhido{reservedItems === 1 ? "" : "s"} ·{" "}
+                {availableItems} disponível{availableItems === 1 ? "" : "is"})
+              </span>
+            )}
+          </div>
           <p className="text-muted-foreground text-sm">
-            Sugestões que vocês gostariam de ganhar — só para mostrar aos
-            convidados.
+            Cadastre os itens que os convidados podem escolher levar para a festa
+            (bebidas, comidas, sobremesas, etc.).
           </p>
         </div>
         <div className="flex gap-2">
@@ -41,8 +58,8 @@ export default async function PresentesPage({
       {gifts.length === 0 ? (
         <EmptyState
           icon={Gift}
-          title="Sua lista está vazia"
-          description="Adicione as sugestões de presente que vocês gostariam de receber. Elas aparecem no convite, apenas para os convidados verem."
+          title="Nenhum item cadastrado ainda"
+          description="Adicione os itens, comidas ou bebidas que os convidados podem escolher levar para a comemoração. Eles aparecem no convite para os convidados escolherem."
           action={
             <GiftFormDialog weddingId={weddingId} categories={categories} />
           }

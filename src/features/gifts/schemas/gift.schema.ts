@@ -27,3 +27,26 @@ export const categoryFormSchema = z.object({
 });
 
 export type CategoryFormInput = z.infer<typeof categoryFormSchema>;
+
+export const itemReservationSchema = z.object({
+  guestName: z
+    .string()
+    .trim()
+    .min(2, "Informe seu nome completo")
+    .max(100, "Nome muito longo"),
+  guestEmail: z
+    .string()
+    .trim()
+    .email("E-mail inválido")
+    .optional()
+    .or(z.literal("")),
+  message: z
+    .string()
+    .trim()
+    .max(500, "Mensagem muito longa")
+    .optional()
+    .or(z.literal("")),
+});
+
+export type ItemReservationInput = z.infer<typeof itemReservationSchema>;
+

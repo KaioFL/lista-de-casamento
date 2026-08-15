@@ -20,13 +20,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import type { Gift, GiftCategory } from "@/types";
+import type { Gift, GiftCategory, GiftReservation } from "@/types";
 
 import { deleteGiftAction } from "../actions/gift.actions";
+import { cancelReservationAction } from "../actions/reservation.actions";
 import { GiftFormDialog } from "./gift-form-dialog";
 
 interface GiftManageCardProps {
-  gift: Gift & { category: GiftCategory | null };
+  gift: Gift & {
+    category: GiftCategory | null;
+    reservations?: GiftReservation[];
+  };
   weddingId: string;
   categories: GiftCategory[];
 }
@@ -39,11 +43,30 @@ export function GiftManageCard({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
+  const activeReservation = gift.reservations?.find(
+    (r) => r.status !== "cancelled",
+  );
+  const isReserved = gift.status === "reserved" || !!activeReservation;
+
   function handleDelete() {
     startTransition(async () => {
       const result = await deleteGiftAction(gift.id, weddingId);
       if (result.success) {
-        toast.success("Presente excluído.");
+        toast.success("Item excluído.");
+        router.refresh();
+      } else toast.error(result.error);
+    });
+  }
+
+  function handleRelease() {
+    startTransition(async () => {
+      const result = await cancelReservationAction(
+        weddingId,
+        gift.id,
+        activeReservation?.id,
+      );
+      if (result.success) {
+        toast.success("Item liberado para outros convidados!");
         router.refresh();
       } else toast.error(result.error);
     });
@@ -74,7 +97,19 @@ export function GiftManageCard({
 
       <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 p-4">
         <div className="space-y-1.5">
-          <h3 className="truncate font-medium">{gift.title}</h3>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h3 className="truncate font-medium">{gift.title}</h3>
+            {isReserved ? (
+              <Badge className="bg-emerald-600/15 text-emerald-700 hover:bg-emerald-600/25 border-emerald-600/20 text-[11px]">
+                ✓ Escolhido
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="text-muted-foreground text-[11px]">
+                Disponível
+              </Badge>
+            )}
+          </div>
+
           <div className="flex flex-wrap items-center gap-1.5">
             {gift.category && (
               <Badge variant="secondary" className="text-[11px]">
@@ -93,14 +128,33 @@ export function GiftManageCard({
               </a>
             )}
           </div>
-          {gift.description && (
+
+          {activeReservation && (
+            <div className="rounded-md border border-emerald-600/20 bg-emerald-50/50 p-2 text-xs text-emerald-950 dark:bg-emerald-950/30 dark:text-emerald-200">
+              <p className="font-semibold">
+                👤 Levado por: {activeReservation.guest_name}
+              </p>
+              {activeReservation.guest_email && (
+                <p className="text-muted-foreground text-[11px]">
+                  Contato: {activeReservation.guest_email}
+                </p>
+              )}
+              {activeReservation.message && (
+                <p className="mt-0.5 italic text-[11px]">
+                  “{activeReservation.message}”
+                </p>
+              )}
+            </div>
+          )}
+
+          {gift.description && !activeReservation && (
             <p className="text-muted-foreground line-clamp-2 text-sm">
               {gift.description}
             </p>
           )}
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5 pt-1">
           <GiftFormDialog
             weddingId={weddingId}
             categories={categories}
@@ -113,22 +167,34 @@ export function GiftManageCard({
             }
           />
 
+          {isReserved && (
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={isPending}
+              onClick={handleRelease}
+              className="text-xs text-amber-700 hover:bg-amber-50 dark:text-amber-300"
+            >
+              Liberar item
+            </Button>
+          )}
+
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon-sm"
                 className="text-muted-foreground hover:text-destructive ml-auto"
-                aria-label="Excluir presente"
+                aria-label="Excluir item"
               >
                 <Trash2 className="size-3.5" />
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Excluir presente?</AlertDialogTitle>
+                <AlertDialogTitle>Excluir item?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  O presente “{gift.title}” será removido da lista.
+                  O item “{gift.title}” será removido da lista.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
