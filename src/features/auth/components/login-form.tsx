@@ -37,9 +37,8 @@ export function LoginForm() {
     startTransition(async () => {
       const result = await loginAction(values);
       if (result.success) {
-        toast.success("Bem-vindo de volta!");
-        router.push(next);
-        router.refresh();
+        toast.success("Bem-vindo de volta! Entrando...");
+        window.location.href = next;
       } else {
         toast.error(result.error);
       }

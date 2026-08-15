@@ -26,8 +26,9 @@ function translateAuthError(message: string): string {
     "Signup requires a valid password": "Informe uma senha válida.",
     "Email rate limit exceeded":
       "Muitas tentativas. Aguarde alguns minutos e tente novamente.",
+    "User not found": "Usuário não encontrado.",
   };
-  return map[message] ?? "Não foi possível concluir. Tente novamente.";
+  return map[message] ?? message ?? "Não foi possível concluir. Tente novamente.";
 }
 
 export async function loginAction(input: LoginInput): Promise<ActionResult> {

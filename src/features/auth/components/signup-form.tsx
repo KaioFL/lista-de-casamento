@@ -36,8 +36,7 @@ export function SignupForm() {
       const result = await signupAction(values);
       if (result.success) {
         toast.success("Conta criada! Vamos começar.");
-        router.push("/painel");
-        router.refresh();
+        window.location.href = "/painel";
       } else if (result.fieldErrors) {
         toast.error(result.error);
       } else {
