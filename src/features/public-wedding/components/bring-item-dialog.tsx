@@ -79,17 +79,17 @@ export function BringItemDialog({
           <Button
             type="button"
             size="sm"
-            className="cursor-pointer bg-[color:var(--wine)] text-white shadow-sm hover:opacity-90"
+            className="w-full cursor-pointer bg-[color:var(--wine)] text-white shadow-sm hover:opacity-90 text-xs px-2.5 h-8.5 sm:h-9"
           >
-            <HeartHandshake className="mr-1.5 size-3.5" />
+            <HeartHandshake className="mr-1.5 size-3.5 shrink-0" />
             Eu levo este item
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-md w-[calc(100vw-2rem)] sm:w-full p-5 sm:p-6">
         <DialogHeader>
-          <div className="mx-auto mb-2 flex size-12 items-center justify-center rounded-full bg-[color:var(--wine)]/10 text-[color:var(--wine)]">
-            <ShoppingBag className="size-6" />
+          <div className="mx-auto mb-2 flex size-11 items-center justify-center rounded-full bg-[color:var(--wine)]/10 text-[color:var(--wine)]">
+            <ShoppingBag className="size-5" />
           </div>
           <DialogTitle className="text-center font-heading text-xl">
             Vou levar este item
