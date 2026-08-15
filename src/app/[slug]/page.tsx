@@ -87,7 +87,6 @@ export default async function PublicWeddingPage({ params }: PageProps) {
             <div className="container-page max-w-3xl">
               <Reveal>
                 <SectionHeading
-                  numeral="I"
                   eyebrow="O grande dia"
                   title="A celebração"
                 />
@@ -161,7 +160,7 @@ export default async function PublicWeddingPage({ params }: PageProps) {
             <div className="bg-foreground/[0.02] absolute inset-x-0 inset-y-8 -z-10" />
             <div className="container-page max-w-2xl text-center">
               <Reveal>
-                <SectionHeading numeral="II" eyebrow="Nós dois" title="Como tudo começou" />
+                <SectionHeading eyebrow="Nós dois" title="Como tudo começou" />
                 {wedding.welcome_message && (
                   <p className="font-heading mt-8 text-[clamp(1.25rem,3vw,1.75rem)] leading-[1.4] font-light text-balance italic">
                     “{wedding.welcome_message}”
@@ -183,7 +182,6 @@ export default async function PublicWeddingPage({ params }: PageProps) {
             <div className="container-page">
               <Reveal>
                 <SectionHeading
-                  numeral="III"
                   eyebrow="Com carinho"
                   title="Lista de presentes"
                 />
@@ -225,7 +223,7 @@ export default async function PublicWeddingPage({ params }: PageProps) {
         >
           <div className="container-page max-w-xl">
             <Reveal>
-              <SectionHeading numeral="IV" eyebrow="R.S.V.P." title="Confirme sua presença" />
+              <SectionHeading eyebrow="R.S.V.P." title="Confirme sua presença" />
               <p className="text-muted-foreground mt-5 text-center text-sm">
                 Ajude-nos a organizar tudo com carinho. Contamos com você!
               </p>
@@ -242,7 +240,7 @@ export default async function PublicWeddingPage({ params }: PageProps) {
         <section id="recados" className="scroll-mt-4 py-14 sm:py-20">
           <div className="container-page">
             <Reveal>
-              <SectionHeading numeral="V" eyebrow="Mural" title="Deixe seu carinho" />
+              <SectionHeading eyebrow="Mural" title="Deixe seu carinho" />
             </Reveal>
             <div className="mt-10">
               <GuestbookSection weddingId={wedding.id} messages={guestbook} />

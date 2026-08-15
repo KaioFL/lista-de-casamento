@@ -1,17 +1,21 @@
 interface SectionHeadingProps {
-  numeral: string;
+  numeral?: string;
   eyebrow?: string;
   title: string;
 }
 
-/** Cabeçalho de seção em estilo editorial: numeral, hairline e título serifado. */
+/** Cabeçalho de seção em estilo editorial: eyebrow e título serifado. */
 export function SectionHeading({ numeral, eyebrow, title }: SectionHeadingProps) {
   return (
     <div className="flex flex-col items-center text-center">
-      <span className="font-heading text-base italic [color:var(--wine)]">
-        {numeral}
-      </span>
-      <span className="my-3 h-8 w-px bg-[color:var(--wine)] opacity-25" />
+      {numeral && (
+        <>
+          <span className="font-heading text-base italic [color:var(--wine)]">
+            {numeral}
+          </span>
+          <span className="my-3 h-8 w-px bg-[color:var(--wine)] opacity-25" />
+        </>
+      )}
       {eyebrow && (
         <span className="label-caps text-[0.65rem] [color:var(--wine)] opacity-90">
           {eyebrow}
